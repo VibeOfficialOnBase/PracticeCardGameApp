@@ -66,6 +66,11 @@ class EntityWrapper {
   }
 
   _generateId() {
+    // Use crypto.randomUUID if available for better uniqueness
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return `demo-${crypto.randomUUID()}`;
+    }
+    // Fallback to timestamp + random string
     return `demo-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
   }
 
@@ -286,7 +291,8 @@ const authWrapper = {
     if (isDemoMode) {
       // Return a dummy subscription object for demo mode
       setTimeout(() => {
-        callback('SIGNED_IN', { user: demoStorage.currentUser });
+        const event = demoStorage.currentUser ? 'SIGNED_IN' : 'SIGNED_OUT';
+        callback(event, { user: demoStorage.currentUser });
       }, 0);
       return {
         data: { subscription: { unsubscribe: () => {} } }
