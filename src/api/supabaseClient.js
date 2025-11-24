@@ -19,7 +19,7 @@ if (isDemoMode) {
 
 // Create Supabase client (or a dummy one for demo mode)
 export const supabase = isDemoMode 
-  ? createClient('https://demo.supabase.co', 'demo-key-not-used')
+  ? createClient('https://demo.localhost', 'demo-key-not-used')
   : createClient(supabaseUrl, supabaseAnonKey);
 
 // Helper function to convert table name to snake_case
@@ -66,7 +66,7 @@ class EntityWrapper {
   }
 
   _generateId() {
-    return `demo-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    return `demo-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
   }
 
   // List entities with optional sorting and limit
