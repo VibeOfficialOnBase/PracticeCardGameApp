@@ -1,16 +1,16 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { createPageUrl } from './utils';
+import { createPageUrl } from '../utils';
 import { base44 } from '@/api/base44Client';
 import { Home, Sparkles, Users, Trophy, Settings, Zap, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
-import OfflineIndicator from './components/OfflineIndicator';
-import InstallPrompt from './components/InstallPrompt';
-import CosmicBackground from './components/CosmicBackground';
-import BackgroundLayers from './components/BackgroundLayers';
-import XPBar from './components/XPBar';
-import NotificationManager from './components/notifications/NotificationManager';
+import OfflineIndicator from '../components/OfflineIndicator';
+import InstallPrompt from '../components/InstallPrompt';
+import CosmicBackground from '../components/CosmicBackground';
+import BackgroundLayers from '../components/BackgroundLayers';
+import XPBar from '../components/XPBar';
+import NotificationManager from '../components/notifications/NotificationManager';
 
 export default function Layout({ children, currentPageName }) {
   const [theme, setTheme] = React.useState('light');
