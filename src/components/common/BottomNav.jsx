@@ -12,8 +12,8 @@ export default function BottomNav() {
     { name: 'Pull', path: 'Practice', icon: Home },
     { name: 'Cards', path: 'MyCards', icon: BookOpen },
     { name: 'Stats', path: 'Leaderboard', icon: BarChart3 },
-    { name: 'Board', path: 'Games', icon: Trophy },
-    { name: 'Giveaways', path: 'PremiumPacks', icon: Gift },
+    { name: 'Board', path: 'Leaderboard', icon: Trophy }, // Point to Leaderboard
+    { name: 'Giveaways', path: 'Giveaways', icon: Gift },
     { name: 'Social', path: 'Community', icon: Users },
     { name: 'Profile', path: 'Profile', icon: User },
     { name: 'Games', path: 'Games', icon: Gamepad2 },
@@ -21,8 +21,11 @@ export default function BottomNav() {
   ];
 
   const isActive = (path) => {
-    if (path === 'Practice' && (location.pathname === '/' || location.pathname === '/Practice')) return true;
-    return location.pathname.includes(path);
+    const currentPath = location.pathname.toLowerCase();
+    const targetPath = createPageUrl(path).toLowerCase();
+
+    if (path === 'Practice' && (currentPath === '/' || currentPath === '/practice')) return true;
+    return currentPath.includes(path.toLowerCase());
   };
 
   return (

@@ -1,6 +1,6 @@
 import Layout from "./Layout.jsx";
 
-import Practice from "./Practice"; // Replaces Dashboard logic for home
+import Practice from "./Practice";
 import Community from "./Community";
 import Achievements from "./Achievements";
 import Profile from "./Profile";
@@ -31,7 +31,28 @@ function _getCurrentPage(url) {
     if (urlLastPart.includes('?')) {
         urlLastPart = urlLastPart.split('?')[0];
     }
-    return urlLastPart || 'Practice';
+    // Match lowercase part to Page Name Key
+    const normalized = urlLastPart.toLowerCase();
+    if (normalized === 'mycards') return 'Cards'; // Map to nav name
+    if (normalized === 'practice') return 'Pull';
+
+    // Default fallback
+    const map = {
+        'practice': 'Practice',
+        'mycards': 'MyCards',
+        'leaderboard': 'Leaderboard',
+        'giveaways': 'Giveaways',
+        'community': 'Community',
+        'profile': 'Profile',
+        'games': 'Games',
+        'calendar': 'Calendar',
+        'chakrablastermax': 'Games',
+        'vibeagotchi': 'Games',
+        'challengebubbles': 'Games',
+        'memorymatch': 'Games'
+    };
+
+    return map[normalized] || 'Practice';
 }
 
 function PagesContent() {
@@ -52,26 +73,27 @@ function PagesContent() {
     return (
         <Layout currentPageName={currentPage}>
             <Routes>
+                {/* Use lowercase paths to match createPageUrl output */}
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<Practice />} />
-                    <Route path="/Practice" element={<Practice />} />
-                    <Route path="/MyCards" element={<MyCards />} />
-                    <Route path="/Leaderboard" element={<Leaderboard />} />
-                    <Route path="/Giveaways" element={<Giveaways />} />
-                    <Route path="/Community" element={<Community />} />
-                    <Route path="/Profile" element={<Profile />} />
-                    <Route path="/Games" element={<Games />} />
-                    <Route path="/Calendar" element={<Calendar />} />
+                    <Route path="/practice" element={<Practice />} />
+                    <Route path="/mycards" element={<MyCards />} />
+                    <Route path="/leaderboard" element={<Leaderboard />} />
+                    <Route path="/giveaways" element={<Giveaways />} />
+                    <Route path="/community" element={<Community />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/games" element={<Games />} />
+                    <Route path="/calendar" element={<Calendar />} />
 
                     {/* Detailed Routes */}
-                    <Route path="/Achievements" element={<Achievements />} />
-                    <Route path="/PremiumPacks" element={<Giveaways />} /> {/* Alias for now */}
+                    <Route path="/achievements" element={<Achievements />} />
+                    <Route path="/premiumpacks" element={<Giveaways />} /> {/* Alias */}
 
                     {/* Games */}
-                    <Route path="/ChakraBlasterMax" element={<ChakraBlasterMax />} />
-                    <Route path="/VibeAGotchi" element={<VibeAGotchi />} />
-                    <Route path="/ChallengeBubbles" element={<ChallengeBubbles />} />
-                    <Route path="/MemoryMatch" element={<MemoryMatch />} />
+                    <Route path="/chakrablastermax" element={<ChakraBlasterMax />} />
+                    <Route path="/vibeagotchi" element={<VibeAGotchi />} />
+                    <Route path="/challengebubbles" element={<ChallengeBubbles />} />
+                    <Route path="/memorymatch" element={<MemoryMatch />} />
                 </Route>
             </Routes>
         </Layout>
