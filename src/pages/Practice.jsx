@@ -13,9 +13,11 @@ import ReflectionJournal from '../components/ReflectionJournal';
 import CompletionFeedback from '../components/CompletionFeedback';
 import StreakCounter from '../components/StreakCounter';
 import GlobalPulseTracker from '../components/GlobalPulseTracker';
-import { CheckCircle, Sparkles } from 'lucide-react';
+import ShareModal from '../components/common/ShareModal';
+import Button from '../components/common/Button';
+import { CheckCircle, Share2 } from 'lucide-react';
 import { FALLBACK_AFFIRMATIONS } from '../utils/affirmations';
-import { toast } from 'sonner'; // or useToast
+import { toast } from 'sonner';
 
 export default function Practice() {
   const { user } = useAuth();
@@ -24,6 +26,8 @@ export default function Practice() {
   const [showJournal, setShowJournal] = useState(false);
   const [showCompletionFeedback, setShowCompletionFeedback] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+
   const queryClient = useQueryClient();
 
   const { data: userProfile } = useQuery({
@@ -116,15 +120,10 @@ export default function Practice() {
       return { success: true };
     },
     onSuccess: async () => {
-      // Optimistic UI update handled by state change mostly, but we trigger feedback immediately
       setShowCompletionFeedback(true);
-      // Also show toast for robustness
       try { toast.success("Practice saved successfully!"); } catch(e) {}
-
-      // Sync in background
       await queryClient.invalidateQueries({ queryKey: ['todaysPractice'] });
       await queryClient.invalidateQueries({ queryKey: ['userProfile'] });
-
       setTimeout(() => {
           setShowCompletionFeedback(false);
           setShowJournal(false);
@@ -201,10 +200,19 @@ export default function Practice() {
             key="card"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-8"
+            className="space-y-8 flex flex-col items-center"
           >
             <PulledCard card={pulledCard} userEmail={user?.email} />
             
+            {/* Share Button */}
+            <Button
+                onClick={() => setShowShareModal(true)}
+                variant="secondary"
+                className="w-full max-w-[200px] rounded-full shadow-lg"
+            >
+                <Share2 className="w-4 h-4 mr-2" /> Share Card
+            </Button>
+
             {showJournal && (
               <ReflectionJournal
                 card={pulledCard}
@@ -224,6 +232,11 @@ export default function Practice() {
       <Section title="Community">
         <GlobalPulseTracker />
       </Section>
+
+      {/* Share Modal */}
+      {showShareModal && pulledCard && (
+        <ShareModal card={pulledCard} onClose={() => setShowShareModal(false)} />
+      )}
     </div>
   );
 }
