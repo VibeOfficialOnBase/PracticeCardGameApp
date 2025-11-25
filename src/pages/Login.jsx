@@ -65,12 +65,16 @@ export default function Login() {
         {/* Logo Section */}
         <div className="text-center mb-8">
             <motion.div
-                className="relative w-32 h-32 mx-auto mb-6 group cursor-pointer"
+                className="relative w-40 h-40 mx-auto mb-6 group cursor-pointer"
                 whileHover={{ scale: 1.05 }}
             >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full animate-logo-glow opacity-75 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute inset-1 bg-black rounded-full flex items-center justify-center border-4 border-purple-400/30">
-                    <span className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-purple-200">V</span>
+                <div className="absolute inset-1 bg-black rounded-full flex items-center justify-center overflow-hidden border-4 border-purple-400/30">
+                    <img
+                        src="/vibe_logo.jpg"
+                        alt="Vibe Official"
+                        className="w-full h-full object-cover"
+                    />
                 </div>
             </motion.div>
 
