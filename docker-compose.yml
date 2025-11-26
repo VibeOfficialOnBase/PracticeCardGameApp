@@ -1,0 +1,48 @@
+# 🐳 PRACTICE APP - Docker Compose Configuration
+# For easy local development and deployment
+
+version: '3.8'
+
+services:
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: practice-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - practice-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  practice-network:
+    driver: bridge
+
+# Usage:
+# 
+# Development:
+#   docker-compose up
+#
+# Production:
+#   docker-compose up -d
+#
+# View logs:
+#   docker-compose logs -f
+#
+# Stop:
+#   docker-compose down
+#
+# Rebuild:
+#   docker-compose up --build
