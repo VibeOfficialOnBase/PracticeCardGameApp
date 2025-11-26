@@ -4,7 +4,6 @@ import Practice from "./Practice";
 import Community from "./Community";
 import Achievements from "./Achievements";
 import Profile from "./Profile";
-import Leaderboard from "./Leaderboard";
 import Calendar from "./Calendar";
 import Giveaways from "./Giveaways";
 import MyCards from "./MyCards";
