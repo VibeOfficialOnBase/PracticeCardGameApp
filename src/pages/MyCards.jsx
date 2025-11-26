@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Heart, Sparkles, BookOpen, Share2, Copy, Check, MessageSquare } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, BookOpen, Share2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import PulledCard from '../components/PulledCard';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from '../components/common/PageHeader';
 import Card from '../components/common/Card';

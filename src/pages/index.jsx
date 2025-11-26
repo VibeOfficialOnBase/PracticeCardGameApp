@@ -4,7 +4,6 @@ import Practice from "./Practice";
 import Community from "./Community";
 import Achievements from "./Achievements";
 import Profile from "./Profile";
-import Leaderboard from "./Leaderboard";
 import Calendar from "./Calendar";
 import Giveaways from "./Giveaways";
 import MyCards from "./MyCards";
@@ -12,7 +11,6 @@ import Games from "./Games";
 
 // Games
 import ChakraBlasterMax from "./ChakraBlasterMax";
-import ChallengeBubbles from "./ChallengeBubbles";
 import MemoryMatch from "./MemoryMatch";
 import VibeAGotchi from "./VibeAGotchi";
 
@@ -61,7 +59,6 @@ function PagesContent() {
                                 <Route path="/" element={<Practice />} />
                                 <Route path="/practice" element={<Practice />} />
                                 <Route path="/mycards" element={<MyCards />} />
-                                <Route path="/leaderboard" element={<Leaderboard />} />
                                 <Route path="/giveaways" element={<Giveaways />} />
                                 <Route path="/community" element={<Community />} />
                                 <Route path="/profile" element={<Profile />} />
@@ -71,7 +68,6 @@ function PagesContent() {
                                 <Route path="/premiumpacks" element={<Giveaways />} />
                                 <Route path="/chakrablastermax" element={<ChakraBlasterMax />} />
                                 <Route path="/vibeagotchi" element={<VibeAGotchi />} />
-                                <Route path="/challengebubbles" element={<ChallengeBubbles />} />
                                 <Route path="/memorymatch" element={<MemoryMatch />} />
                                 <Route path="*" element={<NotFound />} />
                             </Route>

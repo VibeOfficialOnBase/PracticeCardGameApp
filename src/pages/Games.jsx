@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { Zap, Trophy, Star, Sparkles, Brain, Puzzle } from 'lucide-react';
+import { Zap, Trophy, Sparkles, Brain } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';

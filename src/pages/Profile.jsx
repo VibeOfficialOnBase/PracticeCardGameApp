@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
@@ -11,7 +11,7 @@ import Section from '../components/common/Section';
 import Button from '../components/common/Button';
 import Modal from '../components/common/Modal';
 
-import { User, Award, Shield, LogOut, Edit2, Save, Trash2, Heart, Users, Zap, Leaf, Trophy, Sparkles } from 'lucide-react';
+import { LogOut, Edit2, Heart, Users, Zap, Leaf, Sparkles } from 'lucide-react';
 import EnhancedStreakDisplay from '../components/EnhancedStreakDisplay';
 import BadgeDisplay from '../components/badges/BadgeDisplay';
 import UserLevelBadge from '../components/UserLevelBadge';
@@ -31,7 +31,6 @@ export default function Profile() {
   const [favoriteValue, setFavoriteValue] = useState('');
   const [lookingForBuddy, setLookingForBuddy] = useState(false);
 
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: userProfile } = useQuery({

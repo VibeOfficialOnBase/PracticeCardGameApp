@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
@@ -73,7 +73,7 @@ export default function Practice() {
              leche_value: a.category,
              mission: "Reflect on this today."
         }));
-      } catch (e) {
+      } catch {
          return FALLBACK_AFFIRMATIONS.map((a, i) => ({
              id: `local-card-${i}`,
              title: a.category + " Practice",
@@ -92,8 +92,8 @@ export default function Practice() {
       try {
         setPulledCard(JSON.parse(savedCard));
         setShowJournal(true);
-      } catch (e) {
-        console.error('Error loading saved card:', e);
+      } catch (error) {
+        console.error('Error loading saved card:', error);
       }
     }
   }, [todaysPractice]);
@@ -152,7 +152,7 @@ export default function Practice() {
     },
     onSuccess: async () => {
       setShowCompletionFeedback(true);
-      try { toast.success("Practice saved successfully!"); } catch(e) {}
+      try { toast.success("Practice saved successfully!"); } catch {}
       await queryClient.invalidateQueries({ queryKey: ['todaysPractice'] });
       await queryClient.invalidateQueries({ queryKey: ['userProfile'] });
       setTimeout(() => {
@@ -163,7 +163,7 @@ export default function Practice() {
     },
     onError: () => {
         setIsSubmitting(false);
-        try { toast.error("Failed to save. Please try again."); } catch(e) {}
+        try { toast.error("Failed to save. Please try again."); } catch {}
     }
   });
 
@@ -185,7 +185,7 @@ export default function Practice() {
 
         <div>
           <h1 className="text-3xl font-bold mb-2 text-[var(--text-primary)]">Practice Complete! ✨</h1>
-          <p className="text-[var(--text-secondary)]">You've nourished your mind today.</p>
+          <p className="text-[var(--text-secondary)]">You&apos;ve nourished your mind today.</p>
         </div>
 
         <Card className="p-6 max-w-sm w-full mx-auto glass-card">
@@ -217,7 +217,7 @@ export default function Practice() {
           >
             <div className="text-center mb-8">
               <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-2 animate-pulse">
-                Today's Intention
+                Today&apos;s Intention
               </h2>
               <p className="text-[var(--text-secondary)] max-w-xs mx-auto text-sm">
                 Tap the deck to reveal your daily guidance card.
