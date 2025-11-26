@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useRef, useCallback } from 'react';
 import type { Timestamp } from 'spacetimedb';
 import * as moduleBindings from '../spacetime_module_bindings';

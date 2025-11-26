@@ -1,5 +1,3 @@
-
-
 import { motion } from 'framer-motion';
 import { rarityConfig, type CardRarity } from '@/data/cardsWithRarity';
 import { Sparkles } from 'lucide-react';

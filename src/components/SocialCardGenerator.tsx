@@ -1,5 +1,3 @@
-
-
 import { useRef, useState } from 'react';
 import { toPng } from 'html-to-image';
 import { Button } from '@/components/ui/button';

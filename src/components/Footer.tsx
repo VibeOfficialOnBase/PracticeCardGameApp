@@ -1,5 +1,3 @@
-
-
 import { Button } from '@/components/ui/button';
 
 import { Heart, Twitter, MessageCircle, Users } from 'lucide-react';

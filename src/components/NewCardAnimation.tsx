@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { PracticeCard } from '@/data/cardsWithRarity';

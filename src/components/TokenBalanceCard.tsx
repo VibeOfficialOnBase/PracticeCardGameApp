@@ -1,5 +1,3 @@
-
-
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Wallet, RefreshCw } from 'lucide-react';

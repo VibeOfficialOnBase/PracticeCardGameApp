@@ -1,5 +1,3 @@
-
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Share2, Copy, Check, Users, Award, Sparkles, MessageCircle, Twitter, Send } from 'lucide-react';

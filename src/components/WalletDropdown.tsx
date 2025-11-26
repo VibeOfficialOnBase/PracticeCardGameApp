@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import { Copy, LogOut, RefreshCw, Check, ChevronDown, Wallet, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

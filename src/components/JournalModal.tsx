@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useRef } from 'react';
 import type { PracticeCard } from '@/data/cards';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';

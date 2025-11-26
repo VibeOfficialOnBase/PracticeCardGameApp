@@ -1,5 +1,3 @@
-
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { RefreshCw, ChevronDown } from 'lucide-react';
 

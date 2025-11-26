@@ -1,5 +1,3 @@
-
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, BookOpen, Heart, Wind, Lightbulb, Target, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';

@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { AlertCircle, ExternalLink, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';

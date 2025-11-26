@@ -1,5 +1,3 @@
-
-
 import { Crown, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 

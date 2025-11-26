@@ -1,5 +1,3 @@
-
-
 // Multi-pack pull tracking - Each pack has independent daily pulls
 // PRACTICE pack: cards 1-365
 // Vibe Check pack: cards 366-465 (or 1-465 depending on implementation)

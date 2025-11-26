@@ -1,5 +1,3 @@
-
-
 import { motion } from 'framer-motion';
 import { Flame, Award, Zap, TrendingUp } from 'lucide-react';
 import { Card } from '@/components/ui/card';

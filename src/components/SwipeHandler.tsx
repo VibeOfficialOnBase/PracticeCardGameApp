@@ -1,5 +1,3 @@
-
-
 import { useEffect, useRef, ReactNode } from 'react';
 
 interface SwipeHandlerProps {

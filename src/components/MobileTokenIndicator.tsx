@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wallet, X, TrendingUp, Crown } from 'lucide-react';

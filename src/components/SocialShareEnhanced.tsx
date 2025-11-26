@@ -1,5 +1,3 @@
-
-
 import { Button } from '@/components/ui/button';
 import { Share2, Copy, Check } from 'lucide-react';
 import { useState } from 'react';

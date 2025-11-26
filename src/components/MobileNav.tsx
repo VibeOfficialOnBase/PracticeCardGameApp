@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Home, BookOpen, Award, BarChart3, Users, Trophy, Gift, Info, Wallet, Copy, RefreshCw, LogOut, Check, User, Calendar } from 'lucide-react';

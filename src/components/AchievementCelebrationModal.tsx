@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trophy, Star, Sparkles } from 'lucide-react';

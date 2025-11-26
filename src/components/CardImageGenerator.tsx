@@ -1,5 +1,3 @@
-
-
 import { useRef, useState } from 'react';
 
 import type { PracticeCard } from '@/data/cards';

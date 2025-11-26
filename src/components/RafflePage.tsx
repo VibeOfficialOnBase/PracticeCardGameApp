@@ -1,5 +1,3 @@
-
-
 import { CommunityGiveawayPage } from '@/components/CommunityGiveawayPage';
 import { GiveawayEmailCaptureForm } from '@/components/GiveawayEmailCaptureForm';
 

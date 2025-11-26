@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Gift, Sparkles, Heart, Users, Trophy, Check, ExternalLink, Clock } from 'lucide-react';
 

@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, memo } from 'react';
 import { Globe, Users, TrendingUp, Award, Flame, Share2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';

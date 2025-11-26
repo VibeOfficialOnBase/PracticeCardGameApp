@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useCallback } from 'react';
 import { useAccount } from 'wagmi';
 import { VIBE_CHECK_PACKS, type VibeCheckPack } from '@/data/vibeCheckPacks';

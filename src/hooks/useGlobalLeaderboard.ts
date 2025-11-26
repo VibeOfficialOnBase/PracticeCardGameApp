@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { User, CardPull, DbConnection } from '../spacetime_module_bindings';
 import { getConnection, addConnectionListener, initializeConnection } from '../spacetime/spacetimeConnection';

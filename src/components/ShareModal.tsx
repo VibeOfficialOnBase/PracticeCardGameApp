@@ -1,5 +1,3 @@
-
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Share2, Twitter, Image as ImageIcon, Download, MessageCircle } from 'lucide-react';

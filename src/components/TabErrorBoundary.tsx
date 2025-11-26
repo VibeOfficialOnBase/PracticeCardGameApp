@@ -1,5 +1,3 @@
-
-
 import { Component, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, RefreshCcw } from 'lucide-react';

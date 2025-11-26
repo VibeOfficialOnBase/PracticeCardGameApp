@@ -1,5 +1,3 @@
-
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, AlertCircle, Info } from 'lucide-react';
 import { useEffect } from 'react';

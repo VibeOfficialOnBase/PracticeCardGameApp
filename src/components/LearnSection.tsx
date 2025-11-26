@@ -1,5 +1,3 @@
-
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, Heart, Target, Sparkles, Wind, Clock, ChevronRight } from 'lucide-react';

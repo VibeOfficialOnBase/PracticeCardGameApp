@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trophy, TrendingUp, Calendar, Loader2 } from 'lucide-react';
 import { useGlobalLeaderboard } from '@/hooks/useGlobalLeaderboard';

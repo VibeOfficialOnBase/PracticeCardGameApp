@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import * as moduleBindings from '../spacetime_module_bindings';
 import { getConnection, addConnectionListener, initializeConnection } from '../spacetime/spacetimeConnection';

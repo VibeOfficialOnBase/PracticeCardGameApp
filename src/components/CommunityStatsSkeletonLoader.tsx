@@ -1,5 +1,3 @@
-
-
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
