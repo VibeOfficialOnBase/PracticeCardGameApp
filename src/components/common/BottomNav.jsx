@@ -23,7 +23,7 @@ export default function BottomNav() {
     if (targetPath === 'pullcards' && (currentPath === '/' || currentPath === '/pullcards' || currentPath === '/pull' || currentPath === '/practice')) return true;
     if (targetPath === 'wins' && (currentPath === '/wins' || currentPath === '/achievements')) return true;
     if (targetPath === 'stats' && (currentPath === '/stats' || currentPath === '/leaderboard')) return true;
-    if (targetPath === 'games' && (currentPath === '/board' || currentPath === '/games')) return true;
+    if (targetPath === 'games' && (currentPath === '/games')) return true;
     if (targetPath === 'profile' && currentPath === '/profile') return true;
     
     return currentPath.includes(targetPath);

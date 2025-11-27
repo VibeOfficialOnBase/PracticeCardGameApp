@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getUserProfile } from '../lib/supabase';
 import Header from '../components/layout/Header';
-import BottomNav from '../components/common/BottomNav';
 import SparklesBackground from '../components/particles/SparklesBackground';
 import MagicalParticles from '../components/particles/MagicalParticles';
 import OfflineIndicator from '../components/OfflineIndicator';
@@ -64,7 +63,6 @@ export default function Layout({ children, currentPageName }) {
         {children}
       </main>
 
-      {!isGame && <BottomNav />}
     </div>
   );
 }
