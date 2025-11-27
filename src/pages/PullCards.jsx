@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
-import { getUserProfile, savePracticeEntry, savePulledCard } from '../lib/supabase';
+import { getUserProfile, savePracticeEntry, savePulledCard, updateUserStatsOnPull, updateVibeagotchiXpOnPull, recordActivityPulse } from '../lib/supabase';
 import { appApi, supabase } from '@/api/supabaseClient';
 import PageHeader from '../components/common/PageHeader';
 import Card from '../components/common/Card';
@@ -71,7 +71,8 @@ export default function PullCards() {
              title: a.category + " Practice",
              affirmation: a.text,
              leche_value: a.category,
-             mission: "Reflect on this today."
+             mission: a.mission,
+             message: a.message
         }));
       } catch (e) {
          return FALLBACK_AFFIRMATIONS.map((a, i) => ({
@@ -79,7 +80,8 @@ export default function PullCards() {
              title: a.category + " Practice",
              affirmation: a.text,
              leche_value: a.category,
-             message: "Reflect on this today."
+             mission: a.mission,
+             message: a.message
         }));
       }
     },
@@ -105,9 +107,9 @@ export default function PullCards() {
       const randomCard = practiceCards[Math.floor(Math.random() * practiceCards.length)];
       setPulledCard(randomCard);
 
-      // Save to Supabase
+      // Save to Supabase with full sync
       if (user && randomCard.id) {
-        saveCardMutation.mutate(randomCard.id);
+        saveCardMutation.mutate(randomCard);
       }
 
       // Also save to localStorage for quick retrieval within the session
@@ -124,10 +126,27 @@ export default function PullCards() {
   };
 
   const saveCardMutation = useMutation({
-    mutationFn: (cardId) => savePulledCard(user.email, cardId),
+    mutationFn: async (card) => {
+      // Save the pulled card
+      await savePulledCard(user.email, card.id);
+      
+      // Update user stats (pulls, streaks, category counts)
+      await updateUserStatsOnPull(user.email, card);
+      
+      // Update Vibeagotchi XP
+      await updateVibeagotchiXpOnPull(user.email, 25);
+      
+      // Record activity for live pulse tracker
+      await recordActivityPulse(user.email, 'pulled a PRACTICE card', '🎴');
+      
+      return card;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todaysPractice', user?.email] });
       queryClient.invalidateQueries({ queryKey: ['pulledCardsHistory', user?.email] });
+      queryClient.invalidateQueries({ queryKey: ['userProfile', user?.email] });
+      queryClient.invalidateQueries({ queryKey: ['vibeagotchiState', user?.email] });
+      queryClient.invalidateQueries({ queryKey: ['activityPulses'] });
     },
     onError: (error) => {
       console.error("Failed to save pulled card:", error);

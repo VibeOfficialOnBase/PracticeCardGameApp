@@ -21,7 +21,7 @@ const secondaryNavItems: NavItem[] = [
   { id: 'profile', label: 'Profile', icon: User },
   { id: 'calendar', label: 'Calendar', icon: Calendar },
   { id: 'community', label: 'Social', icon: Users },
-  { id: 'leaderboard', label: 'Board', icon: Trophy },
+  { id: 'leaderboard', label: 'Games', icon: Trophy },
   { id: 'raffle', label: 'Giveaway', icon: Gift },
 ];
 

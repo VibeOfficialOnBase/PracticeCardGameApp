@@ -71,7 +71,8 @@ export default function Practice() {
              title: a.category + " Practice",
              affirmation: a.text,
              leche_value: a.category,
-             mission: "Reflect on this today."
+             mission: a.mission,
+             message: a.message
         }));
       } catch (e) {
          return FALLBACK_AFFIRMATIONS.map((a, i) => ({
@@ -79,7 +80,8 @@ export default function Practice() {
              title: a.category + " Practice",
              affirmation: a.text,
              leche_value: a.category,
-             message: "Reflect on this today."
+             mission: a.mission,
+             message: a.message
         }));
       }
     },

@@ -82,8 +82,8 @@ export default function Calendar() {
   return (
     <div className="space-y-6 pb-24 animate-fade-in">
       <PageHeader
-        title="Journal"
-        subtitle="Your journey in time"
+        title="Calendar"
+        subtitle="Your practice journey"
       />
 
       {/* Calendar Widget */}

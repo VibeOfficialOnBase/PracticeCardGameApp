@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Heart, Users, Leaf, Zap, Sparkles } from 'lucide-react';
 import { useSound } from '../components/hooks/useSound';
 import { useHaptic } from '../components/hooks/useHaptic';
-import { base44 } from '@/api/base44Client';
+import { getUserFavorites, saveFavoriteCard, removeFavoriteCard } from '../lib/supabase';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { soundManager } from '../components/utils/soundManager';
 
@@ -35,7 +35,7 @@ export default function PulledCard({ card, userEmail }) {
 
   const { data: favorites = [] } = useQuery({
     queryKey: ['favorites', userEmail],
-    queryFn: () => base44.entities.FavoriteCard.filter({ user_email: userEmail }),
+    queryFn: () => getUserFavorites(userEmail),
     enabled: !!userEmail
   });
 
@@ -44,14 +44,9 @@ export default function PulledCard({ card, userEmail }) {
   const toggleFavorite = useMutation({
     mutationFn: async () => {
       if (isFavorited) {
-        const favorite = favorites.find(fav => fav.practice_card_id === card.id);
-        await base44.entities.FavoriteCard.delete(favorite.id);
+        await removeFavoriteCard(userEmail, card.id);
       } else {
-        await base44.entities.FavoriteCard.create({
-          practice_card_id: card.id,
-          user_email: userEmail,
-          favorited_date: new Date().toISOString()
-        });
+        await saveFavoriteCard(userEmail, card.id);
       }
     },
     onSuccess: () => {

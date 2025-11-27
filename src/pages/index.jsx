@@ -40,8 +40,8 @@ function _getCurrentPage(pathname) {
         'stats': 'Stats',
         'giveaways': 'Giveaway',
         'giveaway': 'Giveaway',
-        'games': 'Board',
-        'board': 'Board',
+        'games': 'Games',
+        'board': 'Games',
         'community': 'Social',
         'social': 'Social',
         'profile': 'Profile',
@@ -52,10 +52,10 @@ function _getCurrentPage(pathname) {
         'practice': 'PullCards',
         'leaderboard': 'Stats',
         'achievements': 'Wins',
-        'chakrablastermax': 'Board',
-        'vibeagotchi': 'Board',
-        'challengebubbles': 'Board',
-        'memorymatch': 'Board'
+        'chakrablastermax': 'Games',
+        'vibeagotchi': 'Games',
+        'challengebubbles': 'Games',
+        'memorymatch': 'Games'
     };
     return pageMap[normalizedPath] || 'PullCards';
 }
@@ -82,7 +82,7 @@ function PagesContent() {
                                 <Route path="/wins" element={<Wins />} />
                                 <Route path="/stats" element={<Stats />} />
                                 <Route path="/giveaway" element={<Giveaways />} />
-                                <Route path="/board" element={<Games />} />
+                                <Route path="/games" element={<Games />} />
                                 <Route path="/social" element={<Community />} />
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/calendar" element={<Calendar />} />
@@ -94,7 +94,7 @@ function PagesContent() {
                                 <Route path="/leaderboard" element={<Stats />} />
                                 <Route path="/giveaways" element={<Giveaways />} />
                                 <Route path="/community" element={<Community />} />
-                                <Route path="/games" element={<Games />} />
+                                <Route path="/board" element={<Games />} />
                                 <Route path="/achievements" element={<Wins />} />
                                 <Route path="/premiumpacks" element={<Giveaways />} />
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trophy, TrendingUp, Users, Calendar, Crown, Gamepad2, BarChart3, Target, Flame } from 'lucide-react';
+import { Trophy, TrendingUp, Users, Calendar, Crown, Gamepad2, BarChart3, Target, Flame, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../contexts/AuthContext';
@@ -52,35 +52,37 @@ export default function Stats() {
 
   const friendEmails = friends.map(f => f.friend_email);
 
+  // Calculate completion percentage (practices completed vs days since first practice)
+  const completionPercentage = practices.length > 0 
+    ? Math.min(100, Math.round((practices.filter(p => p.completed).length / practices.length) * 100))
+    : 0;
+
   // Personal Stats
   const personalStats = [
     {
+      icon: Target,
+      label: 'Total Pulls',
+      value: userProfile?.total_pulls || practices.length,
+      color: 'from-purple-500 to-pink-500'
+    },
+    {
+      icon: Trophy,
+      label: 'Wins',
+      value: practices.filter(p => p.completed).length,
+      color: 'from-amber-400 to-orange-500'
+    },
+    {
       icon: Flame,
-      label: 'Current Streak',
+      label: 'Streak Days',
       value: userProfile?.current_streak || 0,
       suffix: 'days',
       color: 'from-orange-500 to-red-500'
     },
     {
-      icon: Trophy,
-      label: 'Longest Streak',
-      value: userProfile?.longest_streak || 0,
-      suffix: 'days',
-      color: 'from-amber-400 to-orange-500'
-    },
-    {
-      icon: Target,
-      label: 'Total Practices',
-      value: practices.length,
-      color: 'from-purple-500 to-pink-500'
-    },
-    {
-      icon: BarChart3,
-      label: 'Avg Rating',
-      value: practices.length > 0 
-        ? (practices.reduce((sum, p) => sum + (p.rating || 0), 0) / practices.length).toFixed(1)
-        : 0,
-      suffix: '/ 5',
+      icon: Sparkles,
+      label: 'Completion',
+      value: completionPercentage,
+      suffix: '%',
       color: 'from-blue-500 to-indigo-500'
     }
   ];
@@ -88,8 +90,7 @@ export default function Stats() {
   const gameTypes = [
     { id: 'all', name: 'All Games', icon: Trophy },
     { id: 'chakra_blaster', name: 'Chakra Blaster', icon: Gamepad2 },
-    { id: 'memory_match', name: 'Memory Match', icon: Gamepad2 },
-    { id: 'challenge_bubbles', name: 'Challenge Bubbles', icon: Gamepad2 }
+    { id: 'memory_match', name: 'Memory Match', icon: Gamepad2 }
   ];
 
   const filterScoresByTimeframe = (scores) => {

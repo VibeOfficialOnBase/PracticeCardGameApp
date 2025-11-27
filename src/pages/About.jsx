@@ -39,10 +39,10 @@ export default function About() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <Sparkles className="w-5 h-5 text-purple-400" />
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Sparkles className="w-5 h-5 text-purple-400 flex-shrink-0" />
                 <h4 className="text-lg font-bold text-[var(--text-primary)]">PRACTICE</h4>
-                <span className="text-xs bg-purple-500/30 px-2 py-0.5 rounded-full text-purple-300">The Daily Work</span>
+                <span className="text-xs bg-purple-500/30 px-2 py-0.5 rounded-full text-purple-300 whitespace-nowrap">The Daily Work</span>
               </div>
               <p className="text-[var(--text-secondary)] text-sm">
                 <span className="font-semibold">Patiently Repeating Altruistic Challenges To Inspire Core Excellence</span>
@@ -75,15 +75,16 @@ export default function About() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="flex-shrink-0"
                 >
                   <Heart className="w-5 h-5 text-pink-400" />
                 </motion.div>
                 <h4 className="text-lg font-bold text-[var(--text-primary)]">LECHE</h4>
-                <span className="text-xs bg-pink-500/30 px-2 py-0.5 rounded-full text-pink-300">Sweet Reward 🍼</span>
+                <span className="text-xs bg-pink-500/30 px-2 py-0.5 rounded-full text-pink-300 whitespace-nowrap">Sweet Reward 🍼</span>
               </div>
               <p className="text-[var(--text-secondary)] text-sm">
                 <span className="font-semibold">Love, Empathy, Community, Healing, Empowerment</span>
@@ -151,17 +152,17 @@ export default function About() {
           </div>
 
           {/* Social Follow Buttons */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="flex flex-wrap gap-3">
             <Button
               onClick={() => window.open('https://zora.co/invite/vibeofficial', '_blank')}
-              className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold"
+              className="flex-1 min-w-[140px] bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold"
             >
               <ExternalLink className="w-4 h-4 mr-2" />
               Zora
             </Button>
             <Button
               onClick={() => window.open('https://x.com/HaveHonorfaith', '_blank')}
-              className="w-full bg-gradient-to-r from-slate-700 to-slate-900 hover:from-slate-800 hover:to-black text-white font-bold"
+              className="flex-1 min-w-[140px] bg-gradient-to-r from-slate-700 to-slate-900 hover:from-slate-800 hover:to-black text-white font-bold"
             >
               <Twitter className="w-4 h-4 mr-2" />
               Follow on X

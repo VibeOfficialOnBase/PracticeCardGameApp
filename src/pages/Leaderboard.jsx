@@ -45,8 +45,7 @@ export default function Leaderboard() {
   const gameTypes = [
     { id: 'all', name: 'All Games', icon: Trophy },
     { id: 'chakra_blaster', name: 'Chakra Blaster', icon: Gamepad2 },
-    { id: 'memory_match', name: 'Memory Match', icon: Gamepad2 },
-    { id: 'challenge_bubbles', name: 'Challenge Bubbles', icon: Gamepad2 }
+    { id: 'memory_match', name: 'Memory Match', icon: Gamepad2 }
   ];
 
   const filterScoresByTimeframe = (scores) => {
