@@ -19,7 +19,7 @@ export default function Header() {
     { name: 'Wins', icon: Award, path: 'Wins' },
     { name: 'Stats', icon: BarChart3, path: 'Stats' },
     { name: 'Giveaway', icon: Gift, path: 'Giveaway' },
-    { name: 'Board', icon: Trophy, path: 'Board' },
+    { name: 'Games', icon: Trophy, path: 'Games' },
     { name: 'Social', icon: Users, path: 'Social' },
     { name: 'Profile', icon: Heart, path: 'Profile' },
     { name: 'Calendar', icon: Calendar, path: 'Calendar' },
@@ -35,7 +35,7 @@ export default function Header() {
     if (targetPath === 'wins' && (currentPath === '/wins' || currentPath === '/achievements')) return true;
     if (targetPath === 'stats' && (currentPath === '/stats' || currentPath === '/leaderboard')) return true;
     if (targetPath === 'giveaway' && (currentPath === '/giveaway' || currentPath === '/giveaways' || currentPath === '/premiumpacks')) return true;
-    if (targetPath === 'board' && (currentPath === '/board' || currentPath === '/games')) return true;
+    if (targetPath === 'games' && (currentPath === '/board' || currentPath === '/games')) return true;
     if (targetPath === 'social' && (currentPath === '/social' || currentPath === '/community')) return true;
     
     return currentPath.includes(targetPath);
@@ -48,11 +48,12 @@ export default function Header() {
       <div className="relative max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo & Branding */}
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="relative w-8 h-8 rounded-full overflow-hidden shadow-lg group-hover:animate-logo-glow transition-all">
-             <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 animate-pulse" />
-             <div className="absolute inset-0.5 bg-black rounded-full flex items-center justify-center text-xs font-bold text-white">
-                V
-             </div>
+          <div className="relative w-8 h-8 rounded-full overflow-hidden shadow-lg group-hover:scale-110 transition-all">
+             <img 
+               src="/vibe_logo.jpg" 
+               alt="$VibeOfficial Logo" 
+               className="w-full h-full object-cover"
+             />
           </div>
           <span className="font-heading text-xl tracking-widest font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-pink-200 animate-practice-glow">
             PRACTICE

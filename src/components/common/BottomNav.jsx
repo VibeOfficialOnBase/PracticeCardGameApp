@@ -18,7 +18,7 @@ export default function BottomNav() {
   // Dropdown menu items: Giveaway, Board, Social, Profile, Calendar, About
   const menuItems = [
     { name: 'Giveaway', path: 'Giveaway', icon: Gift },
-    { name: 'Board', path: 'Board', icon: Trophy },
+    { name: 'Games', path: 'Games', icon: Trophy },
     { name: 'Social', path: 'Social', icon: Users },
     { name: 'Profile', path: 'Profile', icon: Heart },
     { name: 'Calendar', path: 'Calendar', icon: Calendar },
@@ -33,7 +33,7 @@ export default function BottomNav() {
     if (targetPath === 'wins' && (currentPath === '/wins' || currentPath === '/achievements')) return true;
     if (targetPath === 'stats' && (currentPath === '/stats' || currentPath === '/leaderboard')) return true;
     if (targetPath === 'giveaway' && (currentPath === '/giveaway' || currentPath === '/giveaways' || currentPath === '/premiumpacks')) return true;
-    if (targetPath === 'board' && (currentPath === '/board' || currentPath === '/games')) return true;
+    if (targetPath === 'games' && (currentPath === '/board' || currentPath === '/games')) return true;
     if (targetPath === 'social' && (currentPath === '/social' || currentPath === '/community')) return true;
     
     return currentPath.includes(targetPath);

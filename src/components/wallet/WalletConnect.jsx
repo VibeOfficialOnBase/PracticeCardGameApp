@@ -128,11 +128,11 @@ export default function WalletConnect() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-sm bg-gray-900 border border-white/10 rounded-2xl p-6 shadow-2xl"
+              className="w-full max-w-sm min-w-[380px] min-h-[500px] bg-gray-900 border border-white/10 rounded-2xl p-6 shadow-2xl flex flex-col"
             >
               <h2 className="text-xl font-bold text-white mb-2 text-center">Connect Wallet</h2>
-              <p className="text-white/60 text-sm text-center mb-6">
-                Choose your preferred Algorand wallet
+              <p className="text-white/60 text-sm text-center mb-6 leading-relaxed">
+                Choose your preferred Algorand wallet to connect
               </p>
 
               {error && (
@@ -141,18 +141,18 @@ export default function WalletConnect() {
                 </div>
               )}
 
-              <div className="space-y-3">
+              <div className="space-y-3 flex-1">
                 <button
                   onClick={() => handleConnect('pera')}
                   disabled={isConnecting}
                   className="w-full flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all disabled:opacity-50"
                 >
-                  <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center">
-                    <span className="text-xl">🟡</span>
+                  <div className="w-12 h-12 rounded-full bg-yellow-500 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">🟡</span>
                   </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-white">Pera Wallet</p>
-                    <p className="text-xs text-white/50">Connect with Pera</p>
+                  <div className="text-left flex-1">
+                    <p className="font-semibold text-white text-base">Pera Wallet</p>
+                    <p className="text-sm text-white/50 leading-relaxed">Connect with Pera mobile or web wallet</p>
                   </div>
                 </button>
 
@@ -161,12 +161,12 @@ export default function WalletConnect() {
                   disabled={isConnecting}
                   className="w-full flex items-center gap-4 p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-all disabled:opacity-50"
                 >
-                  <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
-                    <span className="text-xl">🔵</span>
+                  <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">🔵</span>
                   </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-white">Defly Wallet</p>
-                    <p className="text-xs text-white/50">Connect with Defly</p>
+                  <div className="text-left flex-1">
+                    <p className="font-semibold text-white text-base">Defly Wallet</p>
+                    <p className="text-sm text-white/50 leading-relaxed">Connect with Defly mobile wallet</p>
                   </div>
                 </button>
               </div>
