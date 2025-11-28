@@ -44,8 +44,9 @@ export default function About() {
                 <h4 className="text-lg font-bold text-[var(--text-primary)]">PRACTICE</h4>
                 <span className="text-xs bg-purple-500/30 px-2 py-0.5 rounded-full text-purple-300 whitespace-nowrap">The Daily Work</span>
               </div>
-              <p className="text-[var(--text-secondary)] text-sm">
-                <span className="font-semibold">Patiently Repeating Altruistic Challenges To Inspire Core Excellence</span>
+              <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                <span className="font-semibold block sm:inline">Patiently Repeating Altruistic Challenges</span>
+                <span className="font-semibold block sm:inline"> To Inspire Core Excellence</span>
               </p>
             </motion.div>
 
@@ -86,8 +87,9 @@ export default function About() {
                 <h4 className="text-lg font-bold text-[var(--text-primary)]">LECHE</h4>
                 <span className="text-xs bg-pink-500/30 px-2 py-0.5 rounded-full text-pink-300 whitespace-nowrap">Sweet Reward 🍼</span>
               </div>
-              <p className="text-[var(--text-secondary)] text-sm">
-                <span className="font-semibold">Love, Empathy, Community, Healing, Empowerment</span>
+              <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
+                <span className="font-semibold block sm:inline">Love, Empathy, Community,</span>
+                <span className="font-semibold block sm:inline"> Healing, Empowerment</span>
               </p>
             </motion.div>
           </div>

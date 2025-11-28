@@ -19,7 +19,6 @@ import MyCards from "./MyCards";
 
 // Games
 import ChakraBlasterMax from "./ChakraBlasterMax";
-import ChallengeBubbles from "./ChallengeBubbles";
 import MemoryMatch from "./MemoryMatch";
 import VibeAGotchi from "./VibeAGotchi";
 
@@ -41,7 +40,6 @@ function _getCurrentPage(pathname) {
         'giveaways': 'Giveaway',
         'giveaway': 'Giveaway',
         'games': 'Games',
-        'board': 'Games',
         'community': 'Social',
         'social': 'Social',
         'profile': 'Profile',
@@ -54,7 +52,6 @@ function _getCurrentPage(pathname) {
         'achievements': 'Wins',
         'chakrablastermax': 'Games',
         'vibeagotchi': 'Games',
-        'challengebubbles': 'Games',
         'memorymatch': 'Games'
     };
     return pageMap[normalizedPath] || 'PullCards';
@@ -94,14 +91,12 @@ function PagesContent() {
                                 <Route path="/leaderboard" element={<Stats />} />
                                 <Route path="/giveaways" element={<Giveaways />} />
                                 <Route path="/community" element={<Community />} />
-                                <Route path="/board" element={<Games />} />
                                 <Route path="/achievements" element={<Wins />} />
                                 <Route path="/premiumpacks" element={<Giveaways />} />
 
                                 {/* Game Routes */}
                                 <Route path="/chakrablastermax" element={<ChakraBlasterMax />} />
                                 <Route path="/vibeagotchi" element={<VibeAGotchi />} />
-                                <Route path="/challengebubbles" element={<ChallengeBubbles />} />
                                 <Route path="/memorymatch" element={<MemoryMatch />} />
                                 
                                 <Route path="*" element={<NotFound />} />

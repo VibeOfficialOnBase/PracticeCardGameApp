@@ -13,7 +13,7 @@ export default function Header() {
   const location = useLocation();
   const { user, signOut } = useAuth();
 
-  // Desktop navigation: Pull Cards, Wins, Stats, Giveaway, Board, Social, Profile, Calendar, About
+  // Desktop navigation: Pull Cards, Wins, Stats, Giveaway, Games, Social, Profile, Calendar, About
   const navItems = [
     { name: 'Pull Cards', icon: Sparkles, path: 'PullCards' },
     { name: 'Wins', icon: Award, path: 'Wins' },
@@ -35,7 +35,7 @@ export default function Header() {
     if (targetPath === 'wins' && (currentPath === '/wins' || currentPath === '/achievements')) return true;
     if (targetPath === 'stats' && (currentPath === '/stats' || currentPath === '/leaderboard')) return true;
     if (targetPath === 'giveaway' && (currentPath === '/giveaway' || currentPath === '/giveaways' || currentPath === '/premiumpacks')) return true;
-    if (targetPath === 'games' && (currentPath === '/board' || currentPath === '/games')) return true;
+    if (targetPath === 'games' && (currentPath === '/games')) return true;
     if (targetPath === 'social' && (currentPath === '/social' || currentPath === '/community')) return true;
     
     return currentPath.includes(targetPath);
@@ -50,7 +50,7 @@ export default function Header() {
         <Link to="/" className="flex items-center gap-3 group">
           <div className="relative w-8 h-8 rounded-full overflow-hidden shadow-lg group-hover:scale-110 transition-all">
              <img 
-               src="/vibe_logo.jpg" 
+               src="/assets/vibe-logo.png"
                alt="$VibeOfficial Logo" 
                className="w-full h-full object-cover"
              />
