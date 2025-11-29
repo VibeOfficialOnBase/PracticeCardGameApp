@@ -8,7 +8,7 @@
  * @module components/wallet/WalletModal
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import PropTypes from 'prop-types';
@@ -24,11 +24,17 @@ import { useWallet } from '@/web3/WalletContext';
 import './walletModal.css';
 
 /**
- * Detects if the user is on a mobile device
- * @returns {boolean} True if on mobile
+ * Detects if the user is on a mobile/touch device
+ * Uses feature detection rather than user agent string
+ * @returns {boolean} True if on mobile/touch device
  */
 function isMobile() {
-  return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  // Use multiple detection methods for reliability
+  return (
+    navigator.maxTouchPoints > 0 ||
+    'ontouchstart' in window ||
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+  );
 }
 
 /**
@@ -74,6 +80,18 @@ export default function WalletModal({ isOpen, onClose }) {
     }
   }, [isOpen, clearErrors]);
 
+  // Track close timer for cleanup
+  const closeTimerRef = useRef(null);
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
+
   /**
    * Handle Algorand wallet connection
    */
@@ -81,8 +99,8 @@ export default function WalletModal({ isOpen, onClose }) {
     setView('algo');
     try {
       await connectAlgorand();
-      // Success - close modal after brief delay
-      setTimeout(() => onClose(), 500);
+      // Success - close modal after brief delay for user feedback
+      closeTimerRef.current = setTimeout(() => onClose(), 500);
     } catch (error) {
       // Error is already set in context
       console.log('Algorand connection error:', error.message);
@@ -96,8 +114,8 @@ export default function WalletModal({ isOpen, onClose }) {
     setView('evm');
     try {
       await connectEVM();
-      // Success - close modal after brief delay
-      setTimeout(() => onClose(), 500);
+      // Success - close modal after brief delay for user feedback
+      closeTimerRef.current = setTimeout(() => onClose(), 500);
     } catch (error) {
       // Error is already set in context
       console.log('EVM connection error:', error.message);

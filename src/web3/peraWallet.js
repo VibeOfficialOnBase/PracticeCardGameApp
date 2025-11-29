@@ -106,9 +106,9 @@ export async function reconnectPeraSession() {
     }
     
     return null;
-  } catch {
+  } catch (error) {
     // Session reconnection failed - this is expected if no session exists
-    console.log('No existing Pera session to reconnect');
+    console.log('No existing Pera session to reconnect:', error?.message || 'Unknown error');
     return null;
   }
 }

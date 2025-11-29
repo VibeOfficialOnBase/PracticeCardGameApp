@@ -148,6 +148,7 @@ export default function ConnectWalletButton({ className = '' }) {
                           await disconnectEVM();
                           if (!isAlgoConnected) setShowDropdown(false);
                         }}
+                        aria-label="Disconnect Base wallet"
                         className="flex items-center gap-1 px-2 py-1 rounded bg-red-500/10 hover:bg-red-500/20 transition-colors text-xs text-red-400"
                       >
                         <LogOut className="w-3 h-3" />
@@ -184,6 +185,7 @@ export default function ConnectWalletButton({ className = '' }) {
                           await disconnectAlgorand();
                           if (!isEvmConnected) setShowDropdown(false);
                         }}
+                        aria-label="Disconnect Algorand wallet"
                         className="flex items-center gap-1 px-2 py-1 rounded bg-red-500/10 hover:bg-red-500/20 transition-colors text-xs text-red-400"
                       >
                         <LogOut className="w-3 h-3" />

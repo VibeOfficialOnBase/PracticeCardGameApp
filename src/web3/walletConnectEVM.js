@@ -58,13 +58,13 @@ function getProjectId() {
   const projectId = import.meta.env.VITE_WC_PROJECT_ID;
   
   if (!projectId) {
-    console.warn(
+    console.error(
       'WalletConnect v2 Project ID not found. ' +
       'Please set VITE_WC_PROJECT_ID in your .env file. ' +
       'Get a project ID from https://cloud.walletconnect.com'
     );
-    // Return a placeholder that will cause WC to fail gracefully
-    return 'demo-project-id-not-configured';
+    // Throw an error to prevent initialization with invalid credentials
+    throw new Error('WalletConnect Project ID is required. Set VITE_WC_PROJECT_ID in your environment.');
   }
   
   return projectId;
