@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Coffee, Heart, Sparkles, Twitter, X, ExternalLink, Book, Users, Instagram } from 'lucide-react';
+import { Coffee, Heart, Sparkles, Twitter, ExternalLink, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import PageHeader from '../components/common/PageHeader';
@@ -26,12 +25,12 @@ export default function About() {
       <Card className="p-6 relative overflow-hidden glass-card">
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-r from-purple-600/20 to-pink-600/20" />
         
-        <div className="relative pt-8">
+        <div className="relative pt-16">
           <h3 className="text-lg font-bold text-center text-[var(--text-primary)] mb-8">
             PRACTICE to Get LECHE 🥛
           </h3>
           
-          <div className="grid gap-4">
+          <div className="grid gap-4 mt-6">
             {/* PRACTICE Card */}
             <motion.div 
               className="bg-gradient-to-br from-purple-600/20 to-indigo-600/20 rounded-xl p-4 border border-purple-400/30 mt-4"
