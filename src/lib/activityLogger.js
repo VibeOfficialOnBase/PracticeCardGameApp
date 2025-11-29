@@ -35,10 +35,14 @@ export async function logActivity(userEmail, activityType, metadata = {}) {
   }
 
   try {
+    // Note: created_at should use database default (NOW()) for consistency
+    // If the table has a default value, omit created_at here
     const activityData = {
       user_email: userEmail,
       activity_type: activityType,
       metadata: metadata,
+      // Let database set created_at with default value if available
+      // Include client timestamp as fallback for tables without default
       created_at: new Date().toISOString(),
     };
 
@@ -52,7 +56,11 @@ export async function logActivity(userEmail, activityType, metadata = {}) {
       // Table might not exist yet - log warning but don't fail
       console.warn('Could not log activity to user_activity:', error.message);
       // TODO: DB migration needed - create user_activity table with columns:
-      // id (uuid), user_email (text), activity_type (text), metadata (jsonb), created_at (timestamptz)
+      // id (uuid, primary key, default gen_random_uuid())
+      // user_email (text, not null)
+      // activity_type (text, not null)
+      // metadata (jsonb, default '{}')
+      // created_at (timestamptz, default now())
       return null;
     }
 

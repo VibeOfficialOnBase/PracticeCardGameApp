@@ -66,18 +66,34 @@ export const WalletProvider = ({ children }) => {
         connected_at: new Date().toISOString(),
       };
 
-      // Upsert to user_wallets table (create if not exists)
-      const { error: upsertError } = await supabase
+      // Try upsert first (requires composite unique constraint on user_email,wallet_type)
+      let { error: upsertError } = await supabase
         .from('user_wallets')
         .upsert(walletData, { 
           onConflict: 'user_email,wallet_type',
           ignoreDuplicates: false 
         });
 
+      // If upsert fails due to missing constraint, try simple insert
       if (upsertError) {
-        // Table might not exist, log warning but don't fail
-        console.warn('Could not save wallet to user_wallets:', upsertError.message);
-        // TODO: DB migration needed - create user_wallets table in Supabase
+        // Check if error is due to missing table or constraint
+        if (upsertError.code === '42P10' || upsertError.message?.includes('constraint')) {
+          // Constraint doesn't exist, try simple insert (may create duplicates)
+          const { error: insertError } = await supabase
+            .from('user_wallets')
+            .insert(walletData);
+          
+          if (insertError && insertError.code !== '23505') { // Ignore duplicate key errors
+            console.warn('Could not save wallet to user_wallets:', insertError.message);
+          }
+        } else {
+          // Table might not exist or other error
+          console.warn('Could not save wallet to user_wallets:', upsertError.message);
+          // TODO: DB migration needed - create user_wallets table with columns:
+          // id (uuid, primary key), user_id (uuid), user_email (text), wallet_address (text),
+          // wallet_type (text), chain (text), connected_at (timestamptz)
+          // Add unique constraint: UNIQUE(user_email, wallet_type)
+        }
       }
     } catch (err) {
       console.error('Error saving wallet to profile:', err);
@@ -102,11 +118,21 @@ export const WalletProvider = ({ children }) => {
       // Create contract instance
       const tokenContract = new ethers.Contract(VIBE_TOKEN_ADDRESS, ERC20_ABI, provider);
       
-      // Get balance and decimals
-      const [balanceRaw, decimals] = await Promise.all([
-        tokenContract.balanceOf(address),
-        tokenContract.decimals(),
-      ]);
+      // Get balance and decimals with individual error handling
+      let balanceRaw, decimals;
+      try {
+        [balanceRaw, decimals] = await Promise.all([
+          tokenContract.balanceOf(address),
+          tokenContract.decimals(),
+        ]);
+      } catch (contractError) {
+        // Contract might not exist or doesn't implement ERC20 standard
+        console.warn('Token contract call failed. Verify VITE_VIBE_TOKEN_ADDRESS is correct:', contractError.message);
+        setVibeBalance(0);
+        setIsVibeHolder(false);
+        setIsCheckingBalance(false);
+        return;
+      }
 
       // Convert to human-readable format
       const balance = parseFloat(ethers.formatUnits(balanceRaw, decimals));

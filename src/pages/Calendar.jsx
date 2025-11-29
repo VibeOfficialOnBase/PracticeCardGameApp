@@ -105,9 +105,16 @@ export default function Calendar() {
 
       const addToDay = (dateStr, type, item) => {
         if (!dateStr) return;
-        const day = format(new Date(dateStr), 'yyyy-MM-dd');
-        if (!combined[day]) combined[day] = { items: [] };
-        combined[day].items.push({ type, ...item });
+        try {
+          const parsedDate = new Date(dateStr);
+          if (isNaN(parsedDate.getTime())) return; // Invalid date
+          const day = format(parsedDate, 'yyyy-MM-dd');
+          if (!combined[day]) combined[day] = { items: [] };
+          combined[day].items.push({ type, ...item });
+        } catch {
+          // Skip invalid dates
+          return;
+        }
       };
 
       (practices || []).forEach(p => addToDay(p.created_date, 'practice', p));
@@ -344,7 +351,7 @@ export default function Calendar() {
                 <div>
                     <label className="text-xs font-bold text-[var(--text-secondary)] uppercase mb-2 block">Journal</label>
                     <div className="bg-[var(--bg-secondary)] p-4 rounded-2xl text-sm leading-relaxed text-[var(--text-primary)] italic">
-                        "{viewingEntry.reflection}"
+                        &ldquo;{viewingEntry.reflection}&rdquo;
                     </div>
                 </div>
 
