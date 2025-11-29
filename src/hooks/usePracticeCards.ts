@@ -35,13 +35,13 @@ export function getCardById(id: string): PracticeCard | undefined {
  */
 export function getDailyCard(): PracticeCard {
   const today = new Date();
-  const startOfYear = new Date(today.getFullYear(), 0, 0);
+  const startOfYear = new Date(today.getFullYear(), 0, 1);
   const diff = today.getTime() - startOfYear.getTime();
   const oneDay = 1000 * 60 * 60 * 24;
-  const dayOfYear = Math.floor(diff / oneDay);
+  const dayOfYear = Math.floor(diff / oneDay) + 1;
   
   // Use day of year to deterministically select a card (1-365)
-  const cardIndex = dayOfYear % cards.length;
+  const cardIndex = (dayOfYear - 1) % cards.length;
   return cards[cardIndex];
 }
 
