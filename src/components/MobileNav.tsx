@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Home, BookOpen, Award, BarChart3, Users, Trophy, Gift, Info, Wallet, Copy, RefreshCw, LogOut, Check, User, Calendar } from 'lucide-react';
+import { Menu, X, Home, Award, Users, Trophy, Gift, Info, Wallet, Copy, RefreshCw, LogOut, Check, User, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Address } from 'viem';
 
@@ -12,9 +12,8 @@ interface NavItem {
 
 const primaryNavItems: NavItem[] = [
   { id: 'home', label: 'Pull', icon: Home },
-  { id: 'collection', label: 'Cards', icon: BookOpen },
   { id: 'achievements', label: 'Wins', icon: Award },
-  { id: 'analytics', label: 'Stats', icon: BarChart3 },
+  { id: 'leaderboard', label: 'Games', icon: Trophy },
 ];
 
 const secondaryNavItems: NavItem[] = [

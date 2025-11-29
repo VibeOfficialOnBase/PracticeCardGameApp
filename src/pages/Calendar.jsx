@@ -1,26 +1,46 @@
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/api/supabaseClient';
 import { useAuth } from '../contexts/AuthContext';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, addMonths, subMonths } from 'date-fns';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, BookOpen, Calendar as CalendarIcon, Star, Edit2, Trash2, Trophy, Zap, Activity } from 'lucide-react';
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, addMonths, subMonths } from 'date-fns';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, BookOpen, Star, Edit2, Trash2, Trophy, Zap, Activity, Heart } from 'lucide-react';
 import PageHeader from '../components/common/PageHeader';
 import Card from '../components/common/Card';
 import Button from '../components/common/Button';
 import Modal from '../components/common/Modal';
+import { subscribeToUserActivity, unsubscribeFromActivity } from '@/lib/activityLogger';
 
 export default function Calendar() {
   const { user } = useAuth();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [viewingEntry, setViewingEntry] = useState(null);
+  const queryClient = useQueryClient();
+
+  // Subscribe to realtime activity updates
+  useEffect(() => {
+    if (!user?.email) return;
+
+    const channel = subscribeToUserActivity(user.email, () => {
+      // Invalidate calendar data to refresh with new activity
+      queryClient.invalidateQueries({
+        queryKey: ['calendarData', user.email],
+      });
+    });
+
+    return () => {
+      if (channel) {
+        unsubscribeFromActivity(channel);
+      }
+    };
+  }, [user?.email, queryClient]);
 
   // Fetch all calendar activity for the current month
-  const { data: monthData = [], isLoading } = useQuery({
+  const { data: monthData = {} } = useQuery({
     queryKey: ['calendarData', user?.email, format(currentMonth, 'yyyy-MM')],
     queryFn: async () => {
-      if (!user) return [];
+      if (!user) return {};
       const startDate = startOfMonth(currentMonth);
       const endDate = endOfMonth(currentMonth);
 
@@ -64,10 +84,27 @@ export default function Calendar() {
         .gte('achieved_at', startDate.toISOString())
         .lte('achieved_at', endDate.toISOString());
 
+      // 6. User Activity (from activity logger)
+      const { data: userActivities } = await supabase
+        .from('user_activity')
+        .select('*')
+        .eq('user_email', user.email)
+        .gte('created_at', startDate.toISOString())
+        .lte('created_at', endDate.toISOString());
+
+      // 7. Mood entries
+      const { data: moodEntries } = await supabase
+        .from('mood_entry')
+        .select('*')
+        .eq('user_email', user.email)
+        .gte('created_at', startDate.toISOString())
+        .lte('created_at', endDate.toISOString());
+
       // Combine all data keyed by day
       const combined = {};
 
       const addToDay = (dateStr, type, item) => {
+        if (!dateStr) return;
         const day = format(new Date(dateStr), 'yyyy-MM-dd');
         if (!combined[day]) combined[day] = { items: [] };
         combined[day].items.push({ type, ...item });
@@ -78,6 +115,8 @@ export default function Calendar() {
       (scores || []).forEach(s => addToDay(s.created_date, 'score', s));
       (pulses || []).forEach(p => addToDay(p.created_date, 'pulse', p));
       (achievements || []).forEach(a => addToDay(a.achieved_at, 'achievement', a));
+      (userActivities || []).forEach(a => addToDay(a.created_at, 'activity', a));
+      (moodEntries || []).forEach(m => addToDay(m.created_at, 'mood', m));
 
       return combined; // Keyed by 'yyyy-MM-dd'
     },
@@ -245,6 +284,28 @@ export default function Calendar() {
                                 </div>
                             </div>
                         )}
+                        {item.type === 'mood' && (
+                             <div className="flex items-center gap-3">
+                                <div className="p-2 bg-rose-500/10 rounded-lg">
+                                    <Heart className="w-4 h-4 text-rose-500" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm text-[var(--text-primary)]">Mood Entry: {item.mood}</p>
+                                    {item.note && <p className="text-xs text-[var(--text-secondary)]">{item.note}</p>}
+                                </div>
+                            </div>
+                        )}
+                        {item.type === 'activity' && (
+                             <div className="flex items-center gap-3">
+                                <div className="p-2 bg-indigo-500/10 rounded-lg">
+                                    <Activity className="w-4 h-4 text-indigo-500" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm text-[var(--text-primary)] capitalize">{item.activity_type?.replace(/_/g, ' ')}</p>
+                                    <p className="text-xs text-[var(--text-secondary)]">{format(new Date(item.created_at), 'h:mm a')}</p>
+                                </div>
+                            </div>
+                        )}
                     </Card>
                 ))}
             </div>
@@ -265,7 +326,7 @@ export default function Calendar() {
             <div className="space-y-6">
                 <div>
                     <label className="text-xs font-bold text-[var(--text-secondary)] uppercase mb-2 block">Date</label>
-                    <p className="text-[var(--text-primary)]">{format(new Date(viewingEntry.created_date), 'MMMM do, yyyy • h:mm a')}</p>
+                    <p className="text-[var(--text-primary)]">{format(new Date(viewingEntry.created_date || viewingEntry.created_at), 'MMMM do, yyyy • h:mm a')}</p>
                 </div>
 
                 <div>

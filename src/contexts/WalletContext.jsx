@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { PeraWalletConnect } from '@perawallet/connect';
 import { DeflyWalletConnect } from '@blockshake/defly-connect';
+import { ethers } from 'ethers';
+import { supabase } from '@/api/supabaseClient';
 
 const WalletContext = createContext({});
 
@@ -16,8 +18,18 @@ const deflyWallet = new DeflyWalletConnect({
   shouldShowSignTxnToast: true,
 });
 
-// $VibeOfficial token contract on Base (placeholder - update with real contract)
-const VIBE_OFFICIAL_CONTRACT = '0x...'; // TODO: Add real contract address
+// $VibeOfficial token contract on Base
+// TODO: Set this in your .env file as VITE_VIBE_TOKEN_ADDRESS
+const VIBE_TOKEN_ADDRESS = import.meta.env.VITE_VIBE_TOKEN_ADDRESS || '';
+
+// Base mainnet RPC URL
+const BASE_RPC_URL = 'https://mainnet.base.org';
+
+// ERC20 ABI for balanceOf
+const ERC20_ABI = [
+  'function balanceOf(address owner) view returns (uint256)',
+  'function decimals() view returns (uint8)',
+];
 
 export const WalletProvider = ({ children }) => {
   const [walletAddress, setWalletAddress] = useState(null);
@@ -26,6 +38,7 @@ export const WalletProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isVibeHolder, setIsVibeHolder] = useState(false);
   const [vibeBalance, setVibeBalance] = useState(0);
+  const [isCheckingBalance, setIsCheckingBalance] = useState(false);
 
   // Disconnect handler
   const handleDisconnect = useCallback(() => {
@@ -37,22 +50,78 @@ export const WalletProvider = ({ children }) => {
     localStorage.removeItem('walletType');
   }, []);
 
-  // Check $VibeOfficial holdings on Base
-  const checkVibeHoldings = useCallback(async (address) => {
-    if (!address) return;
-    
+  // Save wallet address to Supabase user profile
+  const saveWalletToProfile = useCallback(async (address, type) => {
     try {
-      // For now, we'll use a placeholder check
-      // In production, this would call a Base RPC or API to check token balance
-      // const balance = await checkTokenBalance(address, VIBE_OFFICIAL_CONTRACT);
-      // setVibeBalance(balance);
-      // setIsVibeHolder(balance > 0);
-      
-      // Mock check - always set to false for now
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Try to update user_wallets table or user_profile
+      const walletData = {
+        user_id: user.id,
+        user_email: user.email,
+        wallet_address: address,
+        wallet_type: type,
+        chain: type === 'base' ? 'base' : 'algorand',
+        connected_at: new Date().toISOString(),
+      };
+
+      // Upsert to user_wallets table (create if not exists)
+      const { error: upsertError } = await supabase
+        .from('user_wallets')
+        .upsert(walletData, { 
+          onConflict: 'user_email,wallet_type',
+          ignoreDuplicates: false 
+        });
+
+      if (upsertError) {
+        // Table might not exist, log warning but don't fail
+        console.warn('Could not save wallet to user_wallets:', upsertError.message);
+        // TODO: DB migration needed - create user_wallets table in Supabase
+      }
+    } catch (err) {
+      console.error('Error saving wallet to profile:', err);
+    }
+  }, []);
+
+  // Check $VibeOfficial holdings on Base using ethers.js
+  const checkVibeHoldings = useCallback(async (address) => {
+    if (!address || !VIBE_TOKEN_ADDRESS || VIBE_TOKEN_ADDRESS === '') {
+      // No token address configured, skip balance check
+      console.log('Vibe token address not configured. Set VITE_VIBE_TOKEN_ADDRESS in .env');
       setVibeBalance(0);
       setIsVibeHolder(false);
+      return;
+    }
+
+    setIsCheckingBalance(true);
+    try {
+      // Create provider for Base network
+      const provider = new ethers.JsonRpcProvider(BASE_RPC_URL);
+      
+      // Create contract instance
+      const tokenContract = new ethers.Contract(VIBE_TOKEN_ADDRESS, ERC20_ABI, provider);
+      
+      // Get balance and decimals
+      const [balanceRaw, decimals] = await Promise.all([
+        tokenContract.balanceOf(address),
+        tokenContract.decimals(),
+      ]);
+
+      // Convert to human-readable format
+      const balance = parseFloat(ethers.formatUnits(balanceRaw, decimals));
+      
+      setVibeBalance(balance);
+      setIsVibeHolder(balance > 0);
+      
+      console.log(`$VibeOfficial balance for ${address}: ${balance}`);
     } catch (err) {
       console.error('Failed to check Vibe holdings:', err);
+      // Don't set error state to avoid blocking UX, just log it
+      setVibeBalance(0);
+      setIsVibeHolder(false);
+    } finally {
+      setIsCheckingBalance(false);
     }
   }, []);
 
@@ -100,6 +169,10 @@ export const WalletProvider = ({ children }) => {
         setWalletType('pera');
         localStorage.setItem('walletAddress', address);
         localStorage.setItem('walletType', 'pera');
+        
+        // Save to Supabase
+        await saveWalletToProfile(address, 'pera');
+        
         return address;
       }
     } catch (err) {
@@ -125,6 +198,10 @@ export const WalletProvider = ({ children }) => {
         setWalletType('defly');
         localStorage.setItem('walletAddress', address);
         localStorage.setItem('walletType', 'defly');
+        
+        // Save to Supabase
+        await saveWalletToProfile(address, 'defly');
+        
         return address;
       }
     } catch (err) {
@@ -187,6 +264,9 @@ export const WalletProvider = ({ children }) => {
         localStorage.setItem('walletAddress', address);
         localStorage.setItem('walletType', 'base');
         
+        // Save to Supabase
+        await saveWalletToProfile(address, 'base');
+        
         // Check for $VibeOfficial holdings
         await checkVibeHoldings(address);
         
@@ -216,6 +296,13 @@ export const WalletProvider = ({ children }) => {
     handleDisconnect();
   };
 
+  // Refresh token balance
+  const refreshBalance = async () => {
+    if (walletAddress && walletType === 'base') {
+      await checkVibeHoldings(walletAddress);
+    }
+  };
+
   // Get short address for display
   const getShortAddress = (address) => {
     if (!address) return '';
@@ -226,6 +313,7 @@ export const WalletProvider = ({ children }) => {
     walletAddress,
     walletType,
     isConnecting,
+    isCheckingBalance,
     error,
     isConnected: !!walletAddress,
     isVibeHolder,
@@ -236,6 +324,7 @@ export const WalletProvider = ({ children }) => {
     disconnectWallet,
     getShortAddress,
     checkVibeHoldings,
+    refreshBalance,
   };
 
   return (
