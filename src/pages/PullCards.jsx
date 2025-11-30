@@ -202,16 +202,6 @@ export default function PullCards() {
             exit={{ opacity: 0 }}
             className="flex flex-col items-center py-4 space-y-8"
           >
-            {/* Mood Before PRACTICE - Placed above Pull Card button */}
-            <div className="w-full max-w-md mx-auto">
-                <Section title="How are you feeling?">
-                    <MoodTracker
-                        username={user?.email || 'guest'}
-                        onMoodLog={(mood) => setBeforeMood(mood)}
-                    />
-                </Section>
-            </div>
-
             <div className="text-center">
               <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 mb-2 animate-pulse">
                 Today's Intention
@@ -222,6 +212,19 @@ export default function PullCards() {
             </div>
 
             <CardDeck onPull={handlePullCard} isPulling={isPulling} />
+
+            {/* Daily Vibe Check - Placed below deck as per "NO mood tracker before pulling a card" rule */}
+            <div className="w-full max-w-md mx-auto mt-8">
+                <Section title="Daily Vibe Check">
+                    <p className="text-xs text-[var(--text-secondary)] text-center mb-4">
+                        How are you feeling right now?
+                    </p>
+                    <MoodTracker
+                        username={user?.email || 'guest'}
+                        onMoodLog={(mood) => setBeforeMood(mood)}
+                    />
+                </Section>
+            </div>
           </motion.div>
         ) : (
           <motion.div
