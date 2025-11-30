@@ -42,7 +42,7 @@ export default function About() {
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <Sparkles className="w-5 h-5 text-purple-400 flex-shrink-0" />
                 <h4 className="text-lg font-bold text-[var(--text-primary)]">PRACTICE</h4>
-                <span className="text-xs bg-purple-500/30 px-2 py-0.5 rounded-full text-purple-300 whitespace-nowrap">The Daily Work</span>
+                <span className="text-xs bg-purple-500/30 px-2 py-0.5 rounded-full text-black whitespace-nowrap">The Daily Work</span>
               </div>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                 <span className="font-semibold block sm:inline">Patiently Repeating Altruistic Challenges</span>
@@ -85,7 +85,7 @@ export default function About() {
                   <Heart className="w-5 h-5 text-pink-400" />
                 </motion.div>
                 <h4 className="text-lg font-bold text-[var(--text-primary)]">LECHE</h4>
-                <span className="text-xs bg-pink-500/30 px-2 py-0.5 rounded-full text-pink-300 whitespace-nowrap">Sweet Reward 🍼</span>
+                <span className="text-xs bg-pink-500/30 px-2 py-0.5 rounded-full text-black whitespace-nowrap">Sweet Reward 🍼</span>
               </div>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed">
                 <span className="font-semibold block sm:inline">Love, Empathy, Community,</span>
@@ -174,7 +174,7 @@ export default function About() {
               className="flex-1 min-w-[140px] bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold"
             >
               <Instagram className="w-4 h-4 mr-2" />
-              @EddiePabonOfficial
+              Instagram
             </Button>
           </div>
         </Card>

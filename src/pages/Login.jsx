@@ -150,11 +150,6 @@ export default function Login() {
                         Create Account
                     </Link>
                 </p>
-                {isDemoMode && (
-                    <p className="text-xs text-green-400 font-mono bg-green-400/10 py-1 px-2 rounded border border-green-400/20 inline-block">
-                        ⚠️ DEMO MODE: Use demo@example.com
-                    </p>
-                )}
             </div>
         </div>
       </motion.div>

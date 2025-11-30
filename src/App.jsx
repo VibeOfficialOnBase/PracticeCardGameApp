@@ -4,7 +4,6 @@ import { Toaster } from "@/components/ui/toaster"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { WalletProvider } from '@/contexts/WalletContext'
-import DebugStatus from '@/components/DebugStatus'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -23,7 +22,6 @@ function App() {
         <WalletProvider>
           <Pages />
           <Toaster />
-          <DebugStatus />
         </WalletProvider>
       </AuthProvider>
     </QueryClientProvider>
